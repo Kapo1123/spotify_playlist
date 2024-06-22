@@ -1,0 +1,37 @@
+<!-- backend/playlists/templates/playlists/about.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>About Me - Spotify Playlist</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/layout.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/about.css' %}">
+</head>
+<body>
+    <header>
+        <h1>About Me</h1>
+        <nav>
+            <a href="{% url 'index' %}">Home</a>
+            <a href="{% url 'about' %}">About</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Welcome!</h2>
+        <section class="profile">
+            <img src="{% static 'images/profile.jpg' %}" alt="Profile Picture" class="profile-picture">
+            <p>I am an enthusiastic software engineer. As a trilingual speaker, I recognize the difficulty in finding a playlist on Spotify with mixed songs from different languages or styles.</p>
+            <div class="social-links">
+                <a href="https://github.com/Kapo1123" target="_blank">
+                    <img src="{% static 'images/github-mark.png' %}" alt="GitHub" class="social-logo">
+                </a>
+                <a href="https://www.linkedin.com/in/kapokwok/" target="_blank">
+                    <img src="{% static 'images/linkedin.png' %}" alt="LinkedIn" class="social-logo">
+                </a>
+            </div>
+        </section>
+        <div class="footer">
+            <p>&copy; 2023 SPOTIFY PLAYLIST. All rights reserved.</p>
+        </div>
+    </main>
+</body>
+</html>

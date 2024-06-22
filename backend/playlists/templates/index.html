@@ -1,0 +1,37 @@
+<!-- backend/playlists/templates/playlists/index.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spotify Playlist</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/layout.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Spotify Playlist</h1>
+        <nav>
+            <a href="{% url 'index' %}">Home</a>
+            <a href="{% url 'about' %}">About</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Generate Playlist</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="user_input">Describe the playlist you want:</label>
+            <textarea id="user_input" name="user_input" required></textarea>
+            <button type="submit">Generate</button>
+        </form>
+        <h2>Previous Playlists</h2>
+        <ul>
+            {% for playlist in playlists %}
+            <li>
+                <a href="{{ playlist.spotify_url }}" target="_blank">{{ playlist.name }}</a>
+                <p>{{ playlist.description }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </main>
+</body>
+</html>

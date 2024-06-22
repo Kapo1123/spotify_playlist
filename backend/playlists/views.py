@@ -7,13 +7,6 @@ from spotipy.oauth2 import SpotifyOAuth
 import openai
 
 def index(request):
-    playlists = Playlist.objects.all()
-    return render(request, 'playlists/index.html', {'playlists': playlists})
-
-def about(request):
-    return render(request, 'playlists/about.html')
-
-def generate_playlist(request):
     if request.method == 'POST':
         user_input = request.POST['user_input']
         playlist_name, description, song_list = generate_playlist_from_input(user_input)
@@ -22,18 +15,13 @@ def generate_playlist(request):
         for song in song_list:
             Song.objects.create(playlist=playlist, title=song['title'], artist=song['artist'], spotify_url=song['spotify_url'])
         
-        return redirect('playlist', playlist_id=playlist.id)
-    return render(request, 'playlists/generate.html')
+        return redirect('index')
 
-def playlist_detail(request, playlist_id):
-    playlist = Playlist.objects.get(id=playlist_id)
-    songs = playlist.songs.all()
-    return render(request, 'playlists/playlist.html', {'playlist': playlist, 'songs': songs})
+    playlists = Playlist.objects.all()
+    return render(request, 'index.html', {'playlists': playlists})
 
-def vote(request, playlist_id, vote_type):
-    playlist = Playlist.objects.get(id=playlist_id)
-    Vote.objects.create(playlist=playlist, vote=(vote_type == 'up'))
-    return redirect('playlist', playlist_id=playlist_id)
+def about(request):
+    return render(request, 'about.html')
 
 def generate_playlist_from_input(user_input):
     # Call OpenAI API to generate playlist name and description

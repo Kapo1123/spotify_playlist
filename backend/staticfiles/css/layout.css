@@ -1,0 +1,46 @@
+/* static/css/layout.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: linear-gradient(90deg, #4CAF50, #45a049);
+    color: white;
+    padding: 1em;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+header nav {
+    margin-top: 1em;
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 1em;
+    font-size: 1.2em;
+    transition: color 0.3s ease;
+}
+
+header nav a:hover {
+    color: #ddd;
+    text-decoration: underline;
+}
+
+.footer {
+    margin-top: 2em;
+    color: #777;
+    font-size: 0.9em;
+}

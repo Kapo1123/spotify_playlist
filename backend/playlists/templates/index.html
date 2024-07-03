@@ -1,11 +1,12 @@
 <!-- backend/playlists/templates/playlists/index.html -->
-{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
+    {% load static %}
     <title>Spotify Playlist</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/layout.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/scripts.js' %}"></script>
 </head>
 <body>
     <header>
@@ -16,13 +17,62 @@
         </nav>
     </header>
     <main>
-        <h2>Generate Playlist</h2>
-        <form method="POST">
-            {% csrf_token %}
-            <label for="user_input">Describe the playlist you want:</label>
-            <textarea id="user_input" name="user_input" required></textarea>
-            <button type="submit">Generate</button>
-        </form>
+        <div class="tabs">
+            <div class="tab" id="defaultOpen" onclick="showTab(event, 'General')">General</div>
+            <div class="tab" onclick="showTab(event, 'UsingAI')">Using AI</div>
+        </div>
+
+        <div id="General" class="tab-content">
+            <h2>General Search</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div id="general-search-rows">
+                    <div class="input-group-horizontal">
+                        <label for="type">Type:</label>
+                        <select name="type[]">
+                            <option value="track">Track</option>
+                            <option value="artist">Artist</option>
+                            <option value="album">Album</option>
+                            <option value="playlist">Playlist</option>
+                            <option value="show">Show</option>
+                            <option value="episode">Episode</option>
+                            <option value="audiobook">Audiobook</option>
+                        </select>
+                        <label for="name">Name:</label>
+                        <input type="text" name="name[]" required>
+                        <label for="limit">Limit:</label>
+                        <input type="number" name="limit[]" min="1" max="50" value="10" required>
+                    </div>
+                </div>
+                <button type="button" onclick="addRow()">Add Another Row</button>
+                <div>
+                    <span></span>
+                </div>
+                <button type="submit">Generate</button>
+            </form>
+        </div>
+
+        <div id="UsingAI" class="tab-content">
+            <h2>Generate Playlist Using AI</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="user_input">Describe the playlist you want:</label>
+                    <textarea id="user_input" name="user_input" required></textarea>
+                </div>
+                <div class="input-group-horizontal">
+                    <label for="num_songs">Number of songs:</label>
+                    <select id="num_songs" name="num_songs">
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="150">150</option>
+                        <option value="200">200</option>
+                    </select>
+                    <button type="submit">Generate</button>
+                </div>
+            </form>
+        </div>
+
         <h2>Previous Playlists</h2>
         <ul>
             {% for playlist in playlists %}

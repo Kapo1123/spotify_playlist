@@ -1,12 +1,13 @@
-<!-- backend/playlists/templates/playlists/index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotify Playlist</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/layout.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <script src="{% static 'js/scripts.js' %}"></script>
+    <script src="{% static 'js/scripts.js' %}" defer></script>
 </head>
 <body>
     <header>
@@ -24,14 +25,15 @@
 
         <div id="General" class="tab-content">
             <h2>General Search</h2>
-            <form method="POST">
+            <form method="POST" action="{% url 'index' %}">
                 {% csrf_token %}
+                <input type="hidden" name="form_type" value="general">
                 <div id="general-search-rows">
                     <div class="input-group-horizontal">
                         <label for="type">Type:</label>
                         <select name="type[]">
-                            <option value="track">Track</option>
                             <option value="artist">Artist</option>
+                            <option value="track">Track</option>
                             <option value="album">Album</option>
                             <option value="playlist">Playlist</option>
                             <option value="show">Show</option>
@@ -45,17 +47,15 @@
                     </div>
                 </div>
                 <button type="button" onclick="addRow()">Add Another Row</button>
-                <div>
-                    <span></span>
-                </div>
                 <button type="submit">Generate</button>
             </form>
         </div>
 
         <div id="UsingAI" class="tab-content">
             <h2>Generate Playlist Using AI</h2>
-            <form method="POST">
+            <form method="POST" action="{% url 'index' %}">
                 {% csrf_token %}
+                <input type="hidden" name="form_type" value="using_ai">
                 <div class="input-group">
                     <label for="user_input">Describe the playlist you want:</label>
                     <textarea id="user_input" name="user_input" required></textarea>
@@ -77,8 +77,25 @@
         <ul>
             {% for playlist in playlists %}
             <li>
-                <a href="{{ playlist.spotify_url }}" target="_blank">{{ playlist.name }}</a>
-                <p>{{ playlist.description }}</p>
+                <button class="playlist-name-button" onclick="window.open('{{ playlist.spotify_url }}', '_blank')">
+                    {{ playlist.name }}
+                </button>
+                <button class="collapsible">
+                    <span class="arrow">➔</span>
+                </button>
+                <div class="content">
+                    <p>{{ playlist.description }} <a href="{{ playlist.spotify_url }}" target="_blank">
+                    </a></p>
+                    <ul>
+                        {% for song in playlist.songs.all %}
+                        <li>
+                            <a href="{{ song.spotify_url }}" target="_blank">
+                                {{ song.title }} by {{ song.artist }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </li>
             {% endfor %}
         </ul>

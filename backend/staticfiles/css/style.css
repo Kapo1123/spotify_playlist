@@ -135,3 +135,37 @@ a.button:hover {
 .tab-content.active {
     display: block;
 }
+.collapsible {
+    background-color: #f1f1f1;
+    color: #444;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.active, .collapsible:hover {
+    background-color: #ccc;
+}
+
+.content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f9f9f9;
+}
+
+.arrow {
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+.arrow.active {
+    transform: rotate(90deg);
+}

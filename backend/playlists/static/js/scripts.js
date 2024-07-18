@@ -14,10 +14,6 @@ function showTab(event, tabName) {
     event.currentTarget.className += " active";
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("defaultOpen").click();
-});
-
 function addRow() {
     var container = document.getElementById("general-search-rows");
     var row = document.createElement("div");
@@ -40,3 +36,20 @@ function addRow() {
     `;
     container.appendChild(row);
 }
+document.addEventListener('DOMContentLoaded', function() {
+    var coll = document.getElementsByClassName("collapsible");
+    for (var i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var arrow = this.querySelector(".arrow");
+            arrow.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+});
+

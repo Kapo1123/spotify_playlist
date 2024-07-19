@@ -1,4 +1,5 @@
-// Function to handle tab switching
+// backend/static/js/scripts.js
+
 function showTab(event, tabName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tab-content");
@@ -13,7 +14,6 @@ function showTab(event, tabName) {
     event.currentTarget.className += " active";
 }
 
-// Function to add a new row to the form
 function addRow() {
     var container = document.getElementById("general-search-rows");
     var row = document.createElement("div");
@@ -21,8 +21,8 @@ function addRow() {
     row.innerHTML = `
         <label for="type">Type:</label>
         <select name="type[]">
-            <option value="artist">Artist</option>
             <option value="track">Track</option>
+            <option value="artist">Artist</option>
             <option value="album">Album</option>
             <option value="playlist">Playlist</option>
             <option value="show">Show</option>
@@ -36,8 +36,6 @@ function addRow() {
     `;
     container.appendChild(row);
 }
-
-// Function to handle collapsible content
 document.addEventListener('DOMContentLoaded', function() {
     var coll = document.getElementsByClassName("collapsible");
     for (var i = 0; i < coll.length; i++) {
@@ -45,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.toggle("active");
             var arrow = this.querySelector(".arrow");
             arrow.classList.toggle("active");
-            var content = this.nextElementSibling;
+            var content = this.parentElement.nextElementSibling;
             if (content.style.display === "block") {
                 content.style.display = "none";
             } else {
@@ -54,3 +52,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+

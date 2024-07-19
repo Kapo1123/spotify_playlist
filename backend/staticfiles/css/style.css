@@ -119,13 +119,8 @@ a.button:hover {
 }
 
 .tab.active {
-    background-color: white;
-    border-bottom: 2px solid #4CAF50;
-    color: #4CAF50;
-}
-
-.tab:hover {
-    background-color: #e9e9e9;
+    background-color: #4CAF50;
+    color: white;
 }
 
 .tab-content {
@@ -134,24 +129,25 @@ a.button:hover {
 
 .tab-content.active {
     display: block;
+    background-color: #e9ffe9; /* Light green background for active tab content */
 }
+
 .collapsible {
-    background-color: #f1f1f1;
-    color: #444;
+    background-color: #4CAF50;
+    color: white;
     cursor: pointer;
     padding: 10px;
-    width: 100%;
     border: none;
     text-align: left;
     outline: none;
     font-size: 15px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .active, .collapsible:hover {
-    background-color: #ccc;
+    background-color: #45a049;
 }
 
 .content {
@@ -168,4 +164,36 @@ a.button:hover {
 
 .arrow.active {
     transform: rotate(90deg);
+}
+
+.playlist-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background-color: #4CAF50;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 1em;
+}
+
+.playlist-name-button {
+    background-color: transparent;
+    color: white;
+    border: none;
+    flex: 1;
+    text-align: left;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.playlist-name-button:hover {
+    background-color: #45a049;
+}
+
+.collapsible {
+    background-color: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
 }

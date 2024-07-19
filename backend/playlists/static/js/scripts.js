@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.toggle("active");
             var arrow = this.querySelector(".arrow");
             arrow.classList.toggle("active");
-            var content = this.nextElementSibling;
+            var content = this.parentElement.nextElementSibling;
             if (content.style.display === "block") {
                 content.style.display = "none";
             } else {

@@ -23,7 +23,7 @@
             <div class="tab" onclick="showTab(event, 'UsingAI')">Using AI</div>
         </div>
 
-        <div id="General" class="tab-content">
+        <div id="General" class="tab-content active">
             <h2>General Search</h2>
             <form method="POST" action="{% url 'index' %}">
                 {% csrf_token %}
@@ -77,12 +77,14 @@
         <ul>
             {% for playlist in playlists %}
             <li>
+                <div class="playlist-header">
                 <button class="playlist-name-button" onclick="window.open('{{ playlist.spotify_url }}', '_blank')">
                     {{ playlist.name }}
                 </button>
                 <button class="collapsible">
                     <span class="arrow">➔</span>
                 </button>
+                </div>
                 <div class="content">
                     <p>{{ playlist.description }} <a href="{{ playlist.spotify_url }}" target="_blank">
                     </a></p>

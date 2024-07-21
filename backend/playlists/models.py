@@ -2,6 +2,7 @@
 from django.db import models
 
 class Playlist(models.Model):
+    id = models.CharField(max_length=50, primary_key=True, editable=False)
     name = models.CharField(max_length=255)
     description = models.TextField()
     spotify_url = models.URLField()

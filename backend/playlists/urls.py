@@ -8,4 +8,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('spotify_callback/', views.spotify_callback, name='spotify_callback'),
     path('about/', views.about, name='about'),
+    path('delete_playlist/<str:playlist_id>/', views.delete_playlist, name='delete_playlist'),
 ]
+

@@ -84,6 +84,7 @@
                 <button class="collapsible">
                     <span class="arrow">➔</span>
                 </button>
+                <button onclick="location.href='{% url 'delete_playlist' playlist.id %}'">Delete</button>
                 </div>
                 <div class="content">
                     <p>{{ playlist.description }} <a href="{{ playlist.spotify_url }}" target="_blank">

@@ -1,5 +1,5 @@
 # backend/playlists/views.py
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.http import JsonResponse
 from .models import Playlist, Song, Vote
 from django.http import HttpResponse
@@ -44,14 +44,9 @@ def index(request):
             })
         form_type = request.POST.get('form_type')
         if form_type != 'ai':
-            playlist_name, song_list,description = generate_playlist_general(user_inputs,spotify)
+            generate_playlist_general(user_inputs,spotify)
         else:
-            playlist_name, song_list,description = generate_playlist_withAI(user_inputs,spotify)
-        playlist_url = spotify.user_playlist_create(spotyfy_id,playlist_name,True,True,description)
-        playlist = Playlist.objects.create(name=playlist_name, spotify_url=playlist_url['external_urls']['spotify'], description = description)
-        
-        for song in song_list:
-            Song.objects.create(playlist=playlist, title=song['title'], artist=song['artist'], spotify_url=song['url'], id =song['id'] )
+            generate_playlist_withAI(user_inputs,spotify)
         
         return redirect('index')
 
@@ -126,7 +121,31 @@ def generate_playlist_general(user_input,spotify):
     response_parts = response_text.split(",", 1)
     playlist_name = response_parts[0]
     description = response_parts[1].strip() if len(response_parts) > 1 else ""
-    return playlist_name, songs,description
+    playlist_url = spotify.user_playlist_create(spotyfy_id,playlist_name,True,True,description)
+    playlist = Playlist.objects.create(id=playlist_url['id'] , name=playlist_name, spotify_url=playlist_url['external_urls']['spotify'], description = description)
+    song_uri=[]
+    for song in songs:
+        Song.objects.create(playlist=playlist, title=song['title'], artist=song['artist'], spotify_url=song['url'], id =song['id'])
+        song_uri.append(f'spotify:track:{song["id"]}')
+    spotify.user_playlist_add_tracks(spotyfy_id,playlist_url['id'],song_uri)    
+
+def delete_playlist(request, playlist_id):
+    playlist = get_object_or_404(Playlist, id=playlist_id)
+    token_info = sp_oauth.get_cached_token()
+    
+    if not token_info:
+        auth_url = sp_oauth.get_authorize_url()
+        return redirect(auth_url)
+    
+    access_token = token_info['access_token']
+    spotify = Spotify(auth=access_token)
+    
+    try:
+        spotify.user_playlist_unfollow(spotyfy_id, playlist_id)
+        playlist.delete()
+        return redirect('index')
+    except Exception as e:
+        return HttpResponse(f"Failed to delete playlist: {e}")    
 
 def about(request):
     return render(request, 'about.html')

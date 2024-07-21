@@ -119,8 +119,9 @@ a.button:hover {
 }
 
 .tab.active {
-    background-color: #4CAF50;
-    color: white;
+    background-color: white;
+    border-bottom: 2px solid #4CAF50;
+    color: #4CAF50;
 }
 
 .tab-content {
@@ -129,7 +130,7 @@ a.button:hover {
 
 .tab-content.active {
     display: block;
-    background-color: #e9ffe9; /* Light green background for active tab content */
+    background-color: #f9f9f9; /* Light background for active tab content */
 }
 
 .collapsible {

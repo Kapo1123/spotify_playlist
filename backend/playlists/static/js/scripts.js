@@ -19,20 +19,20 @@ function addRow() {
     var row = document.createElement("div");
     row.className = "input-group-horizontal";
     row.innerHTML = `
-        <label for="type">Type:</label>
-        <select name="type[]">
-            <option value="track">Track</option>
-            <option value="artist">Artist</option>
-            <option value="album">Album</option>
-            <option value="playlist">Playlist</option>
-            <option value="show">Show</option>
-            <option value="episode">Episode</option>
-            <option value="audiobook">Audiobook</option>
-        </select>
-        <label for="name">Name:</label>
-        <input type="text" name="name[]" required>
-        <label for="limit">Limit:</label>
-        <input type="number" name="limit[]" min="1" max="50" value="10" required>
+       <label for="type">Type:</label>
+                        <select name="type[]">
+                            <option value="artist">Artist</option>
+                            <option value="track">Track</option>
+                            <option value="album">Album</option>
+                            <option value="playlist">Playlist</option>
+                            <option value="show">Show</option>
+                            <option value="episode">Episode</option>
+                            <option value="audiobook">Audiobook</option>
+                        </select>
+                        <label for="name">Name:</label>
+                        <input type="text" name="name[]" required>
+                        <label for="limit">Limit:</label>
+                        <input type="number" name="limit[]" min="1" max="50" value="10" required>
     `;
     container.appendChild(row);
 }

@@ -107,13 +107,15 @@ def generate_playlist_general(user_input,spotify):
     prompt = (
         f"Generate a Spotify playlist name and description according to the following user input: {user_input}. "
         f"This is the number of the playlists created: {len(Playlist.objects.all())}. "
-        f"Here are the names of the playlists: {playlists_name}. "
-        f" Here are the songs in this playlist: {songs}. Do not duplicate the name of the playlist. "
-        f"First, provide the playlist name. Then, provide the description."
+        f"Here are the names of the playlists: {playlists_name}. Do not use the existed playlsit name"
+        f" Here are the songs in this playlist: {songs}. "
+        f"First, provide a new playlist name ccording to the user input, if it is a chinese songer, provide english and chinese playlist name like Eason Chan's collection 陳奕迅合集. Look at the existed playlist name and do not duplicate" 
+        f"Then, provide the description according to the user input. like 浮誇, 淘汰 and more from this talented singer.'"
         f"Return the answer by just the name and the description seperate by a , not saying like Playlist Name: Bieber Fever"
+        f"Here is an example response 'Eason Chan's collection 陳奕迅合集, A playlist featuring the top 10 songs by the artist Eason Chan. Enjoy hits like 愛情轉移(國), 浮誇, 淘汰 and more from this talented singer.'"
     )
     AI_reponse = openAiClient.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4o-mini",
         messages=[{"role": "user", "content":prompt}],
         max_tokens=150
     )
@@ -125,8 +127,9 @@ def generate_playlist_general(user_input,spotify):
     playlist = Playlist.objects.create(id=playlist_url['id'] , name=playlist_name, spotify_url=playlist_url['external_urls']['spotify'], description = description)
     song_uri=[]
     for song in songs:
-        Song.objects.create(playlist=playlist, title=song['title'], artist=song['artist'], spotify_url=song['url'], id =song['id'])
-        song_uri.append(f'spotify:track:{song["id"]}')
+        if not Song.objects.filter(id=song['id']).exists():
+            Song.objects.create(playlist=playlist, title=song['title'], artist=song['artist'], spotify_url=song['url'], id=song['id'])
+            song_uri.append(f'spotify:track:{song["id"]}')
     spotify.user_playlist_add_tracks(spotyfy_id,playlist_url['id'],song_uri)    
 
 def delete_playlist(request, playlist_id):
